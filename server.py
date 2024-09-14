@@ -168,4 +168,4 @@ def getOrganizationData():
     return json.loads(str(db_data).replace("ObjectId(", "").replace(")", "").replace("'",'"')), 200
 
 if __name__ == '__main__':
-  app.run(port=8080)
+    app.run(debug=True, port=os.getenv("PORT", default=8080))
