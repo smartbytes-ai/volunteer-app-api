@@ -28,7 +28,7 @@ def hello():
 
 
 @app.route("/api/login", methods=["POST"])
-def login():
+def login():                              #login 
     data = request.get_json()
 
     if not data or "email" not in data or "password" not in data:
@@ -61,7 +61,7 @@ def login():
 
 
 @app.route("/api/signup", methods=["POST"])
-def signup():
+def signup():           #creating an account
     data = request.get_json()
     if not data or 'email' not in data or 'password' not in data or len(data['email']) == 0 or len(data["password"]) == 0:
         return jsonify({"message": "Missing email or password"}), 400
@@ -77,7 +77,7 @@ def signup():
     return jsonify({"message": "Account created successfully"}), 201
 
 @app.route("/api/createOrganization", methods=["POST"])
-def createOrganization():
+def createOrganization():             #creating an organization, requires a unique name, description, optional url, location, and phone number
     data = request.get_json()
     if not data or 'name' not in data or 'token' not in data or 'location' not in data or "phone" not in data or "description" not in data or "url" not in data:
         return jsonify({"message": "Missing 1 or more parameters"}), 400
@@ -99,7 +99,7 @@ def createOrganization():
     return jsonify({"message": "Organization created successfully"}), 201
 
 @app.route("/api/joinOrganization", methods=["POST"])
-def joinOrganization():
+def joinOrganization():                                #to join an organiation, you need the join code
     data = request.get_json()
     if not data or 'code' not in data or 'token' not in data:
         return jsonify({"message": "Missing org code or token"}), 400
@@ -118,8 +118,8 @@ def joinOrganization():
     return jsonify({"message": "You have joined the organization successfully"}), 201
 
 @app.route("/api/addHours", methods=["POST"])
-def addHours():
-    data = request.get_json()
+def addHours():                                  #organization can input hours into a persons profile, needs to input the number of hours, user id, and org id
+    data = request.get_json()     #a number
     if not data or 'token' not in data or 'hours' not in data or "user_id" not in data or 'org_id' not in data:
         return jsonify({"message": "Missing token or hours or user_id or org_id"}), 400
     try:
@@ -142,7 +142,7 @@ def addHours():
     return jsonify({"message": "Hours added successfully"}), 201
 
 @app.route("/api/getUserProfile", methods=["GET"])
-def getUserProfile():
+def getUserProfile():                          #inputs a user id to get the users details.
     data = request.get_json()
     if not data or 'user_id' not in data:
         return jsonify({"message": "Missing user id"}), 400
@@ -156,7 +156,7 @@ def getUserProfile():
     return json.loads(str(db_data).replace("ObjectId(", "").replace(")", "").replace("'",'"')), 200
 
 @app.route("/api/getOrganizationData", methods=["GET"])
-def getOrganizationData():
+def getOrganizationData():                          #get the organization name.
     data = request.get_json()
     if not data or 'org_id' not in data:
         return jsonify({"message": "Missing org id"}), 400
